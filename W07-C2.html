@@ -1,0 +1,371 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"  
+  "http://www.w3.org/TR/html4/loose.dtd">  
+<html > 
+<head><title>CS2002 Week 7: C2 - Code Breaker</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+<meta name="generator" content="TeX4ht (http://www.tug.org/tex4ht/)"> 
+<meta name="originator" content="TeX4ht (http://www.tug.org/tex4ht/)"> 
+<!-- html --> 
+<meta name="src" content="W07-C2.tex"> 
+<link rel="stylesheet" type="text/css" href="W07-C2.css"> 
+</head><body 
+>
+   <div class="maketitle">
+                                                                                      
+                                                                                      
+                                                                                      
+                                                                                      
+
+<h2 class="titleHead">CS2002 Week 7: C2 - Code Breaker</h2>
+<div class="author" ><span 
+class="pplr7t-x-x-120">Jon Lewis (jon.lewis@st-andrews.ac.uk)</span></div><br />
+<div class="date" ><span 
+class="pplr7t-x-x-120">Due date: Wednesday 11th March, 21:00</span><br />
+<span 
+class="pplr7t-x-x-120">25% of Practical Mark for the Module</span></div>
+   </div>
+   <h4 class="likesubsectionHead"><a 
+ id="x1-1000"></a>Objective</h4>
+<!--l. 20--><p class="noindent" >To gain experience with programming in C and creating and manipulating suitable data abstractions.
+<!--l. 22--><p class="noindent" >
+   <h4 class="likesubsectionHead"><a 
+ id="x1-2000"></a>Learning Outcomes</h4>
+<!--l. 24--><p class="noindent" >By the end of this practical you should:
+     <ul class="itemize1">
+     <li class="itemize">be capable of constructing simple data abstractions in C
+     </li>
+     <li class="itemize">be capable of allocating and manipulating collection and record structures
+     </li>
+     <li class="itemize">have extended your experience in writing modular C programs
+     </li>
+     <li class="itemize">understand the need for thorough testing and providing evidence thereof
+     </li></ul>
+<!--l. 35--><p class="noindent" >
+   <h4 class="likesubsectionHead"><a 
+ id="x1-3000"></a>Overview</h4>
+<!--l. 36--><p class="noindent" >In this practical you will write a program that counts alphabetic and whitespace characters in text files on
+StudRes at
+<div class="center" 
+>
+<!--l. 38--><p class="noindent" >
+<!--l. 39--><p class="noindent" ><a 
+href="http://studres.cs.st-andrews.ac.uk/CS2002/Practicals/W07-C2/data/" class="url" ><span 
+class="pcrr7t-">http://studres.cs.st-andrews.ac.uk/CS2002/Practicals/W07-C2/data/</span></a></div>
+<!--l. 42--><p class="noindent" >You will also extend your character counter to decode pieces of encrypted cipher text. Sample cipher
+text files and key text files are also supplied in the same directory. Finally you will write a short
+report.
+                                                                                      
+                                                                                      
+<!--l. 45--><p class="noindent" >
+   <h4 class="likesubsectionHead"><a 
+ id="x1-4000"></a>Character Counting</h4>
+<!--l. 46--><p class="noindent" >You are required to write a program to read in characters from a file the name of which is specified on the
+command line and output a table showing the count of the occurrences of each alphabetic or whitespace
+character in the file. Characters to be treated specially are:
+     <ul class="itemize1">
+     <li class="itemize">Alphabetic characters: For these, you should compute a combined count of both the upper and
+     lower case instances. You may find a suitable alphabetic test for characters in <span 
+class="pcrr7t-">"ctype.h" </span>that
+     you could use.
+     </li>
+     <li class="itemize">Whitespace characters: take these to comprise space, tab, linefeed, carriage return, vertical tab,
+     form feed, and you should compute a combined count of all whitespace characters. Once again,
+     you may find a suitable whitespace character test in <span 
+class="pcrr7t-">"ctype.h"</span>.
+     </li>
+     <li class="itemize">You  must  provide  a  Makefile  with  a  default  target  (the  first  one)  which  builds  your  character
+     counter executable as <span 
+class="pcrr7t-">CounterMain</span>. You should also provide a <span 
+class="pcrr7t-">clean </span>target in the Makefile to
+     remove the executable and other <span 
+class="pcrr7t-">.o </span>files generated during the compilation process.
+     </li>
+     <li class="itemize">Your <span 
+class="pcrr7t-">CounterMain </span>program should expect a filename to be passed as a command line argument
+     to your main function (remember <span 
+class="pcrr7t-">argv[0] </span>is always the name of the executable and <span 
+class="pcrr7t-">argv[1] </span>is
+     the first proper argument). It should count the characters in this file and print out the occurrences
+     once it has reached the end of the file.
+     </li>
+     <li class="itemize">All your source code for the project must be in a <span 
+class="pcrr7t-">src </span>directory within your assignment directory.</li></ul>
+<!--l. 57--><p class="noindent" >Below are some examples of executing your compiled program from within the <span 
+class="pcrr7t-">src </span>directory and pointing it
+at files in the <span 
+class="pcrr7t-">data </span>directory within your assignment folder. The examples show the expected
+output for some different command-line arguments, indicating the functionality that you should
+provide:
+                                                                                      
+                                                                                      
+   <div class="verbatim" id="verbatim-1">
+./CounterMain
+&#x00A0;<br />Usage:&#x00A0;./CounterMain&#x00A0;&#x003C;some_file.txt&#x003E;&#x00A0;[key.txt]
+&#x00A0;<br />
+&#x00A0;<br />./CounterMain&#x00A0;../data/non_existent_file.txt
+&#x00A0;<br />Trying&#x00A0;to&#x00A0;open&#x00A0;file:&#x00A0;No&#x00A0;such&#x00A0;file&#x00A0;or&#x00A0;directory
+&#x00A0;<br />
+&#x00A0;<br />./CounterMain&#x00A0;../data/Hello_World.txt
+&#x00A0;<br />Total&#x00A0;chars&#x00A0;counted:&#x00A0;11
+&#x00A0;<br />Char,&#x00A0;Count
+&#x00A0;<br />_,&#x00A0;1
+&#x00A0;<br />d,&#x00A0;1
+&#x00A0;<br />e,&#x00A0;1
+&#x00A0;<br />h,&#x00A0;1
+&#x00A0;<br />l,&#x00A0;3
+&#x00A0;<br />o,&#x00A0;2
+&#x00A0;<br />r,&#x00A0;1
+&#x00A0;<br />w,&#x00A0;1
+&#x00A0;<br />
+&#x00A0;<br />./CounterMain&#x00A0;../data/Hello_World_LF_CR.txt
+&#x00A0;<br />Total&#x00A0;chars&#x00A0;counted:&#x00A0;13
+&#x00A0;<br />Char,&#x00A0;Count
+&#x00A0;<br />_,&#x00A0;3
+&#x00A0;<br />d,&#x00A0;1
+&#x00A0;<br />e,&#x00A0;1
+&#x00A0;<br />h,&#x00A0;1
+&#x00A0;<br />l,&#x00A0;3
+&#x00A0;<br />o,&#x00A0;2
+&#x00A0;<br />r,&#x00A0;1
+&#x00A0;<br />w,&#x00A0;1
+</div>
+<!--l. 90--><p class="nopar" >
+<!--l. 92--><p class="noindent" >The first two invocations above indicate what your program should print when no command-line arguments
+are supplied and when the specified file cannot be found. The other invocations specify files that do exist. The
+<span 
+class="pcrr7t-">Hello</span><span 
+class="pcrr7t-">_World.txt </span>file simply contains the string &#8221;<span 
+class="pcrr7t-">Hello World</span>&#8221; and the <span 
+class="pcrr7t-">Hello</span><span 
+class="pcrr7t-">_World</span><span 
+class="pcrr7t-">_LF</span><span 
+class="pcrr7t-">_CR.txt </span>file
+contains the same text, but with an additional linefeed and a carriage return character at the end. Note that the
+occurrence of these additional characters is treated as additional occurrence of whitespace characters,
+indicated as &#8221;<span 
+class="pcrr7t-">_</span>&#8221; in the program&#8217;s output. After processing the file, your program is supposed to
+produce the output as shown above, containing a report on the total number of characters that were
+found in the file and a comma-separated list of the character counts (ordered by ASCII character
+value).
+<!--l. 95--><p class="noindent" >
+   <h5 class="likesubsubsectionHead"><a 
+ id="x1-5000"></a>Method</h5>
+<!--l. 97--><p class="noindent" >You do not need to use dynamic memory allocation or pass by reference for this practical when
+designing your data types. Look at the Person example (L05/PersonStructByValue) on student
+resources as an example of providing abstract data types without the necessity of pass by reference or
+dynamic memory allocation. That said, dynamic memory allocation, and maintaining/passing
+pointers to structs (see L07-08/PersonStructDynamic) may improve modular design, style and
+efficiency.
+<!--l. 100--><p class="noindent" ><br 
+class="newline" />You should design suitable data types to represent CharacterCount information relating to a single character
+                                                                                      
+                                                                                      
+and a data type to represent a Collection of these CharacterCount records, as well as the total number of
+characters counted. The Collection can hold a fixed size array of records. A neat way to index this array is to
+use the ASCII character values themselves as the indices. That is, you could hold the count record for character
+c in the element <span 
+class="pcrr7t-">store[c] </span>where <span 
+class="pcrr7t-">store </span>is an array of 256 records in your Collection type (or
+possibly an array of pointers to records if you choose to use dynamic memory allocation). But
+no magic numbers! Work out how to <span 
+class="pcrr7t-">#define </span>the size without actually doing any calculation
+yourself.
+<!--l. 103--><p class="noindent" ><br 
+class="newline" />Provide suitable operations for your data types, such as creating a new collection data structure, updating the
+collection by changing the count for a given character that has been found in a file, and to perform any other
+necessary actions, such as printing out the collection. As for any module, provide an interface for this module
+in a corresponding header file. To aid your development, it is probably worth writing a short test program to
+verify that your modules work as intended.
+<!--l. 106--><p class="noindent" ><br 
+class="newline" />Methods which change the content in your data structures will have a form similar to:
+                                                                                      
+                                                                                      
+   <div class="verbatim" id="verbatim-2">
+&#x00A0;&#x00A0;&#x00A0;&#x00A0;Structure&#x00A0;incrementCount(Structure&#x00A0;s,&#x00A0;char&#x00A0;c);
+</div>
+<!--l. 111--><p class="nopar" >
+<!--l. 113--><p class="noindent" >where a new, updated struct is returned from the method. This is because the function <span 
+class="pcrr7t-">incrementCount</span>
+cannot change <span 
+class="pcrr7t-">s </span>unless it is passed in by pointer. Should you decide to use dynamic memory allocation and
+pass pointers to structs, then the method could have a form similar to:
+                                                                                      
+                                                                                      
+   <div class="verbatim" id="verbatim-3">
+&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;void&#x00A0;incrementCount(Structure&#x00A0;&#x22C6;s,&#x00A0;char&#x00A0;c);
+</div>
+<!--l. 118--><p class="nopar" >
+<!--l. 120--><p class="noindent" >as it no longer needs to return a copy of the updated structure.
+<!--l. 123--><p class="noindent" ><br 
+class="newline" />In a separate file reader module, you should probably write functions that open a file specified by filename and
+return the next valid character from a specified stream. Try to consider erroneous input here and
+permit your program to exit gracefully if the specified file does not exist as shown in the output
+above.
+<!--l. 126--><p class="noindent" ><br 
+class="newline" />In another module, you should write code that takes the filename passed into <span 
+class="pcrr7t-">main </span>and uses your file and
+Collection modules&#8217; functions to continually get a character from a file specified on the command line and to
+update the collection structure for a given character until the end of the file is reached. You should
+provide functions to populate, query and print out the collection. Finally, complete the program as
+specified, and test that it works. You may wish to create a few small text files of your own, e.g. a
+file with a few different characters, for initial testing before attempting to count the characters in
+the supplied text files. As always provide a Makefile to build your executable programs. Once
+you have a Makefile with default (first) target and clean target, you will be able to use stacscheck
+and run a number of functionality tests over your program (see section on Running stacscheck
+below).
+<!--l. 130--><p class="noindent" >
+   <h5 class="likesubsubsectionHead"><a 
+ id="x1-6000"></a>General Programming Tips</h5>
+<!--l. 131--><p class="noindent" >Use appropriate header files for type declarations, function prototypes etc. and structure these
+properly. Use header guards (conditional compilation instructions) where necessary in <span 
+class="pcrr7t-">.h </span>files. Keep
+the main routine short, effectively a series of function calls. Devolve the work of the system into
+separate (small) functions, passing relevant parameters such as collection or record structures to
+functions. Look at the Person examples on student resources as examples of providing abstract data
+types.
+<!--l. 134--><p class="noindent" >
+   <h4 class="likesubsectionHead"><a 
+ id="x1-7000"></a>Decoding</h4>
+<!--l. 135--><p class="noindent" >Once you have constructed your character counting program you can extend your program to break a simple
+code. It should take two files, called the cipher and the key. The cipher has the correct order of characters, but a
+substitution has been performed on them, whereas the key has the correct letters rearranged randomly. Extend
+your program to make use of the optional third command-line argument &#8221;<span 
+class="pcrr7t-">key.txt</span>&#8221; indicated in the usage
+message shown above. That is, your program will now treat the first command-line argument as
+the cipher file and the second argument as the key file. It should count the characters in both of
+them.
+<!--l. 138--><p class="noindent" ><br 
+class="newline" />To simplify the problem the cipher only covers the 26 letters of the alphabet plus a whitespace
+character. All occurrences of various whitespace characters are conflated into a single count for a
+whitespace char. Numbers and any other characters are not involved and whether a letter is in upper or
+lower case is ignored. The cipher is a 1-1 mapping from plain to cipher text. As an example, given
+the true text string &#8220;<span 
+class="pcrr7t-">c a t at t</span>&#8221;, a valid key is &#8220;<span 
+class="pcrr7t-">tat . Tac</span>&#8221; (two spaces before the &#8221;<span 
+class="pcrr7t-">.</span>&#8221; and
+two after), while a valid cipher is &#8220;<span 
+class="pcrr7t-">b h u hu u</span>&#8221;. Note that in this particular case, the true space
+character is mapped to the space character in the cipher as well, although this need not be the case in
+general.
+<!--l. 142--><p class="noindent" ><br 
+class="newline" />Given both a cipher and a key, your program should be able to calculate the original text. Your program should
+                                                                                      
+                                                                                      
+do this in phases:
+     <ol  class="enumerate1" >
+     <li 
+  class="enumerate" id="x1-7002x1">Adapt your program to detect the presence of both cipher and key as command-line arguments,
+     and then to subsequently calculate the character counts for both of them.
+     </li>
+     <li 
+  class="enumerate" id="x1-7004x2">Potentially adapt your CharacterCount record struct from Part 1 to include a member that can
+     record  the  original  true-text  replacement  character  for  a  particular  cipher-text  character,  and
+     potentially add functions to set the replacement.
+     </li>
+     <li 
+  class="enumerate" id="x1-7006x3">Build a Collection which maps cipher-characters to original true-text characters, by looking for
+     places where the character count for the cipher and key agree. You may assume that each count
+     will be unique, except when 0.
+     </li>
+     <li 
+  class="enumerate" id="x1-7008x4">Re-open and read the cipher file again character by character, but this time, print out to the screen
+     the true-text replacement for each observed cipher-text character (as indicated by the Collection
+     you built in the previous step), and thereby decode the file. Note your program should not have
+     stored the cipher file in memory, you should reopen it and print it back out, but it should store in
+     memory the Collection that maps from cipher characters back to the original text.</li></ol>
+<!--l. 152--><p class="noindent" >The key files in the <span 
+class="pcrr7t-">data </span>directory contain all the characters of the original plaintext message with
+the same frequency with which they occur in the plaintext. That is, the replacement cipher has
+not been applied to the characters in the key files, instead the order of the characters has been
+randomized to obscure the original plaintext message. Capitalisation, commas and full-stops have
+also been applied to the text to obscure the original message. The cipher files contain encrypted
+text.
+<!--l. 155--><p class="noindent" >Below is an example of executing your compiled program from within the <span 
+class="pcrr7t-">src </span>directory and pointing it at both
+cipher and key files in the <span 
+class="pcrr7t-">data </span>directory (assumed to be within your assignment folder). The example shows
+the expected output of decoding the <span 
+class="pcrr7t-">catatt</span><span 
+class="pcrr7t-">_cipher.txt </span>file by using the <span 
+class="pcrr7t-">catatt</span><span 
+class="pcrr7t-">_key.txt</span>
+file:
+                                                                                      
+                                                                                      
+   <div class="verbatim" id="verbatim-4">
+./CounterMain&#x00A0;../data/catatt_cipher.txt&#x00A0;../data/catatt_key.txt
+&#x00A0;<br />Decoding
+&#x00A0;<br />c&#x00A0;a&#x00A0;t&#x00A0;at&#x00A0;t
+</div>
+<!--l. 162--><p class="nopar" >
+<!--l. 164--><p class="noindent" >
+   <h4 class="likesubsectionHead"><a 
+ id="x1-8000"></a>Running stacscheck</h4>
+<!--l. 165--><p class="noindent" >Some stacscheck tests have been provided to help you verify the operation of your program against much of
+the functional specification. You can run the automated checking system on your program by
+opening a terminal window connected to the Linux lab clients/servers and executing the following
+commands:
+                                                                                      
+                                                                                      
+   <div class="verbatim" id="verbatim-5">
+cd&#x00A0;~/CS2002/W07-C2
+&#x00A0;<br />stacscheck&#x00A0;/cs/studres/CS2002/Practicals/W07-C2/Tests
+</div>
+<!--l. 170--><p class="nopar" >
+<!--l. 172--><p class="noindent" >assuming <span 
+class="pcrr7t-">CS2002/W07-C2 </span>is your assignment directory. This will run a number of character count tests over
+your program and also some decode tests.
+<!--l. 175--><p class="noindent" >
+   <h4 class="likesubsectionHead"><a 
+ id="x1-9000"></a>Deliverables</h4>
+<!--l. 177--><p class="noindent" >Hand in via MMS, by the deadline of 9pm on Wednesday of Week 7, a zip file containing:
+     <ul class="itemize1">
+     <li class="itemize">Your assignment directory with all your source code, including any of your own tests.
+     </li>
+     <li class="itemize">A PDF report describing your design and implementation, any difficulties you encountered, how
+     you tested your implementation above and beyond using stacscheck. Take care to explain and
+     justify your design and implementation decisions in clarity and detail.</li></ul>
+<!--l. 184--><p class="noindent" >
+   <h4 class="likesubsectionHead"><a 
+ id="x1-10000"></a>Marking Guidance</h4>
+<!--l. 186--><p class="noindent" >The submission will be marked according to the general mark descriptors at:
+<div class="center" 
+>
+<!--l. 187--><p class="noindent" >
+<!--l. 188--><p class="noindent" ><a 
+href="https://studres.cs.st-andrews.ac.uk/CS2002/Assessment/descriptors.pdf" class="url" ><span 
+class="pcrr7t-">https://studres.cs.st-andrews.ac.uk/CS2002/Assessment/descriptors.pdf</span></a></div>
+<!--l. 191--><p class="noindent" >A very good attempt with decomposition of your code into a sensible set of modules and functions achieving
+almost all required functionality, together with a clear report showing a good level of understanding, can
+achieve a mark of 14 - 16. This means you should produce very good code with very good decomposition and
+testing and provide clear explanations and justifications of design and implementation decisions in your
+report. To achieve a mark of 17 or above, you will need to implement all required functionality.
+Quality and clarity of design, implementation, testing, and your report are key at the top end.
+<br 
+class="newline" />
+<!--l. 193--><p class="noindent" >
+   <h4 class="likesubsectionHead"><a 
+ id="x1-11000"></a>Lateness</h4>
+<!--l. 194--><p class="noindent" >The standard penalty for late submission applies (Scheme B: 1 mark per 8 hour period, or part thereof):
+<a 
+href="http://info.cs.st-andrews.ac.uk/student-handbook/learning-teaching/assessment.html#lateness-penalties" class="url" ><span 
+class="pcrr7t-">http://info.cs.st-andrews.ac.uk/student-handbook/learning-teaching/assessment.html#lateness-penalties</span></a>
+                                                                                      
+                                                                                      
+<!--l. 197--><p class="noindent" >
+   <h4 class="likesubsectionHead"><a 
+ id="x1-12000"></a>Good Academic Practice</h4>
+<!--l. 198--><p class="noindent" >As usual, I would remind you to ensure you are following the relevant guidelines on good academic practice as
+outlined at
+<div class="center" 
+>
+<!--l. 199--><p class="noindent" >
+<!--l. 200--><p class="noindent" ><a 
+href="https://www.st-andrews.ac.uk/students/rules/academicpractice/" class="url" ><span 
+class="pcrr7t-">https://www.st-andrews.ac.uk/students/rules/academicpractice/</span></a></div>
+    
+</body></html> 
+
+                                                                                      
+
+

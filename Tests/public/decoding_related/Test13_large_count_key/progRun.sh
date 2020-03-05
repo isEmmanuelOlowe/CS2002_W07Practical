@@ -1,0 +1,1 @@
+./CounterMain "$TESTDIR/key.txt"
