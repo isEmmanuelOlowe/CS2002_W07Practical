@@ -1,1 +1,0 @@
-./CounterMain "$TESTDIR/cipher.txt"

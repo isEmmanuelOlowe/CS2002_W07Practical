@@ -5,7 +5,7 @@
 #include "counter.h"
 
 //Stores the total number of characters which have been found.
-int total = 0;
+int total;
 /*
 * Adds a character to the create node in the Linked List.
 */
@@ -49,12 +49,16 @@ void addToStructure(node *current, char c) {
 */
 char setGroup(char c) {
   char standardChar;
+  //The character is whitespace
   if (isspace(c)) {
     standardChar = '_';
   }
+  //The character is alphabetical
   else if(isalpha(c)){
+    //sends all the alphabetical characters to lower space
     standardChar = tolower(c);
   }
+  //the character is not valid to be counted
   else {
     return '\0';
   }
@@ -71,6 +75,7 @@ node* incrementCount(node* base, char ch) {
     //If there are no items in the linked list sets first item to the head of linked list.
     if (base == NULL) {
       total += 1;
+      //creates new node and pointer
       base = (node *) malloc(sizeof(node));
       base->character = c;
       base->count = 1;
@@ -79,6 +84,7 @@ node* incrementCount(node* base, char ch) {
     //Determines if character is larger than the base of the linked list and makes nececesary changes.
     else if (base->character > c) {
       total += 1;
+      //creates next node and pointer
       node *next = (node *) malloc(sizeof(node ));
       next->count = 1;
       next->character = c;
@@ -98,7 +104,9 @@ node* incrementCount(node* base, char ch) {
 */
 void printCount(node* base) {
   printf("Total chars counted: %d\n", total);
-  printf("Char, Count\n");
+  if (total != 0) {
+    printf("Char, Count\n");
+  }
   node *current = base;
   while(current != NULL) {
     printf("%c, %d\n", current->character, current->count);
@@ -177,6 +185,10 @@ node* new_occurence(const char *filename) {
   fp = fopen(filename, "r");
   if (fp) {
     char ch = getc(fp);
+    //For empty files
+    if (ch == EOF) {
+      printCount(NULL);
+    }
     while (ch != EOF) {
       base = incrementCount(base, ch);
       ch = getc(fp);
