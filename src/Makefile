@@ -4,11 +4,13 @@ LFLAGS = -Wall -Wextra
 MAIN_DEPS = counter.h
 COLLECTION_DEPS = countCollection.h
 
-CounterMain: counterMain.o countArray.o
-	${CC} ${LFLAGS} counterMain.o countArray.o -o CounterMain
+All: CounterMain AlternativeMain
 
-AlternativeMain:counterMain.o countLinkedList.o
-	${CC} ${LFLAGS} counterMain.o countLinkedList.o -o AlternativeMain
+AlternativeMain: counterMain.o characterCount.o countArray.o
+	${CC} ${LFLAGS} counterMain.o characterCount.o countArray.o -o AlternativeMain
+
+CounterMain:counterMain.o characterCount.o countLinkedList.o
+	${CC} ${LFLAGS} counterMain.o characterCount.o countLinkedList.o -o CounterMain
 
 counterMain.o: counterMain.c $(MAIN_DEPS)
 	${CC} ${CFLAGS} counterMain.c

@@ -87,7 +87,7 @@ void printCount(node* base) {
   if (base) {
     printf("Total chars counted: %d\n", total);
     node *current = base;
-    printf("Char, Count");
+    printf("Char, Count\n");
     while(current != NULL) {
       printf("%c, %d\n", current->character, current->count);
       current = current->next;

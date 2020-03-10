@@ -71,9 +71,12 @@ node* new_occurence(const char *filename) {
 }
 
 
-void countCharacter(char * filename) {
+void countCharacters(char * filename) {
   node *base = new_occurence(filename);
-  printCount(base);
+  if (base) {
+    
+    printCount(base);
+  }
 }
 
 void decipher(char *cipherFilename, char *keyFilename) {

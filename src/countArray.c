@@ -16,7 +16,7 @@ typedef struct _node {
 * Adjusts index provided to get and set correct index from array.
 */
 int indexCorrector(char c) {
-  if ('_') {
+  if (c == '_') {
     return WHITESPACE;
   }
   else {
@@ -31,7 +31,7 @@ int indexCorrector(char c) {
 node* incrementCount(node* base, char c) {
   //Doesn't counter null characters
   if (c != '\0') {
-    if (!base) {
+    if (base == NULL) {
       base = (node *) malloc(sizeof(node));
     }
     base->character[indexCorrector(c)] += 1;
@@ -46,12 +46,14 @@ node* incrementCount(node* base, char c) {
 void printCount(node* base) {
   if (base) {
     printf("Total chars counted: %d\n", base->total);
-    printf("Char, Count");
+    printf("Char, Count\n");
     if (base->character[WHITESPACE]) {
       printf("_, %d\n", base->character[WHITESPACE]);
     }
     for (int i = 1; i < MAX_LENGTH; i++) {
-      printf("%c, %d\n", i + ALPHABETICAL, base->character[i]);
+      if (base->character[i]) {
+        printf("%c, %d\n", i + ALPHABETICAL, base->character[i]);
+      }
     }
   }
   else {
