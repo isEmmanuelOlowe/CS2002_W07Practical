@@ -1,16 +1,26 @@
 CC = clang
 CFLAGS = -c -Wall -Wextra -O0
 LFLAGS = -Wall -Wextra
-DEPS = counter.h
+MAIN_DEPS = counter.h
+COLLECTION_DEPS = countCollection.h
 
-CounterMain: counterMain.o counter.o
-	${CC} ${LFLAGS} counterMain.o counter.o -o CounterMain
+CounterMain: counterMain.o countArray.o
+	${CC} ${LFLAGS} counterMain.o countArray.o -o CounterMain
 
-counterMain.o: counterMain.c $(DEPS)
+AlternativeMain:counterMain.o countLinkedList.o
+	${CC} ${LFLAGS} counterMain.o countLinkedList.o -o AlternativeMain
+
+counterMain.o: counterMain.c $(MAIN_DEPS)
 	${CC} ${CFLAGS} counterMain.c
 
-counter.o: counter.c
-	${CC} ${CFLAGS} counter.c
+characterCount.o: characterCount.c $(COLLECTION_DEPS)
+	${CC} ${CFLAGS} characterCount.c
+
+countLinkedList.o: countLinkedList.c
+	${CC} ${CFLAGS} countLinkedList.c
+
+countArray.o: countArray.c
+	${CC} ${CFLAGS} countArray.c
 
 clean:
-	rm *.o CounterMain
+	rm *.o CounterMain AlternativeMain
