@@ -1,3 +1,5 @@
+#!/bin/bash
+#Creates the make file to generate Makefile for using tests with Array based implementation.
 echo "CC = clang
 CFLAGS = -c -Wall -Wextra -O0
 LFLAGS = -Wall -Wextra
@@ -6,11 +8,11 @@ COLLECTION_DEPS = countCollection.h
 
 All: CounterMain AlternativeMain
 
-AlternativeMain: counterMain.o characterCount.o countArray.o
-	\${CC} \${LFLAGS} counterMain.o characterCount.o countArray.o -o AlternativeMain
+CounterMain: counterMain.o characterCount.o countArray.o
+	\${CC} \${LFLAGS} counterMain.o characterCount.o countArray.o -o CounterMain
 
-CounterMain: counterMain.o characterCount.o countLinkedList.o
-	\${CC} \${LFLAGS} counterMain.o characterCount.o countLinkedList.o -o CounterMain
+AlternativeMain:counterMain.o characterCount.o countLinkedList.o
+	\${CC} \${LFLAGS} counterMain.o characterCount.o countLinkedList.o -o AlternativeMain
 
 counterMain.o: counterMain.c \$(MAIN_DEPS)
 	\${CC} \${CFLAGS} counterMain.c
@@ -25,4 +27,4 @@ countArray.o: countArray.c
 	\${CC} \${CFLAGS} countArray.c
 
 clean:
-	rm *.o CounterMain AlternativeMain" > Makefile
+	rm *.o CounterMain AlternativeMain" > src/Makefile

@@ -23,16 +23,20 @@ void addToStructure(node *current, char c) {
     current->count += 1;
   }
   else if (current->next == NULL){
+    //adds a new node to the end of the linked list
     total += 1;
+    //Dynamically allocates space for this node.
     current->next = (node *) malloc(sizeof(node));
     current->next->character = c;
     current->next->count = 1;
     current->next->next = NULL;
   }
   else {
+    //Determines if the current character is larger than the next one
     node *next = current->next;
     if (next->character > c) {
       total += 1;
+      //Dyanamically allocates space to store it since it is smaller.
       node *new = (node *) malloc(sizeof(node));
       new->character = c;
       new->count = 1;
@@ -65,7 +69,7 @@ node* incrementCount(node* base, char c) {
     else if (base->character > c) {
       total += 1;
       //creates next node and pointer
-      node *next = (node *) malloc(sizeof(node ));
+      node *next = (node *) malloc(sizeof(node));
       next->count = 1;
       next->character = c;
       next->next = base;
@@ -92,18 +96,20 @@ void printCount(node* base) {
       current = current->next;
     }
   }
-  else {
-    printf("Total chars counted: 0");
-  }
 }
 
 /*
 * Decodes a give cipher by parsing in character.
 */
 char decode(node *ciper, node *key, char c) {
+  //uses found to represent a boolean.
+  //determines if correct value has been found.
   int found = 0;
+  //Gets the count of the character from it cipher
   int count;
+  //gets the char that will replace the character.
   char ch;
+  //loops till the character count has been found.
   node *current = ciper;
   while (current != NULL && found == 0) {
     if (current->character == c) {
@@ -112,19 +118,32 @@ char decode(node *ciper, node *key, char c) {
     }
     current = current->next;
   }
-  found = 0;
 
+  found = 0;
   current = key;
+
+  //Loops over till a character will identical count has been found.
   while (current != NULL && found == 0) {
     if (current->count == count) {
       ch = current->character;
       found = 1;
     }
-
     current = current->next;
   }
+  //replaces the whitespace indicator with actual space.
   if (ch == '_') {
     ch = ' ';
   }
+  //returns the determined character
   return ch;
+}
+/*
+* cleans space dynamically allocated after use.
+*/
+void cleanSpace(node *base) {
+  //Cleans all the next nodes of the program
+  if (base->next != NULL) {
+    cleanSpace(base->next);
+  }
+  free(base);
 }

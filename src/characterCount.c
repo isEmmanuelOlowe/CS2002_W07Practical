@@ -70,14 +70,16 @@ node* new_occurence(const char *filename) {
   return base;
 }
 
-
+/*
+* Prints the number of characters which have been counted.
+*/
 void countCharacters(char * filename) {
   node *base = new_occurence(filename);
   if (base) {
     //prints the counter
     printCount(base);
+    cleanSpace(base);
   }
-  free(base);
 }
 
 void decipher(char *cipherFilename, char *keyFilename) {
@@ -85,14 +87,21 @@ void decipher(char *cipherFilename, char *keyFilename) {
   node *cipher = new_occurence(cipherFilename);
   node *key = new_occurence(keyFilename);
   //prints the cipher if the linked list of both are non-null
-  if(cipher && key){
-    //decipher
-    decrypt(cipher, key, cipherFilename);
+  if(cipher){
+    if (key) {
+      //decipher
+      decrypt(cipher, key, cipherFilename);
+      //cleans the space used
+      cleanSpace(key);
+    }
+    //cleans the space used.
+    cleanSpace(cipher);
   }
-  free(cipher);
-  free(key);
 }
 
+/*
+* Error message if program not found.
+*/
 void error_message() {
   printf("Usage: ./CounterMain <some_file.txt> [key.txt]");
 }

@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #define ALPHABETICAL ('a' - 1)
 #define WHITESPACE 0
-#define MAX_LENGTH ('z' - '_' + 1)
+#define MAX_LENGTH ('z' - '_')
 
 /*
 * Node stores Total and Character
@@ -47,17 +47,16 @@ void printCount(node* base) {
   if (base) {
     printf("Total chars counted: %d\n", base->total);
     printf("Char, Count\n");
+    //prints the whitespace found if any.
     if (base->character[WHITESPACE]) {
       printf("_, %d\n", base->character[WHITESPACE]);
     }
+    //Prints the alphabetical characters if found.
     for (int i = 1; i < MAX_LENGTH; i++) {
       if (base->character[i]) {
         printf("%c, %d\n", i + ALPHABETICAL, base->character[i]);
       }
     }
-  }
-  else {
-    printf("Total chars counted: 0");
   }
 }
 
@@ -80,4 +79,11 @@ char decode(node *cipher, node *key, char c) {
     }
   }
   return ch;
+}
+
+/*
+* Cleans dynamically allocated memory used.
+*/
+void cleanSpace(node *base) {
+  free(base);
 }
