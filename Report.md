@@ -17,6 +17,7 @@ It is required that the file names be taken in the form of command line argument
 
 * The number of occurrences of a character is unique
 * Special Characters other than: Alphabetical and Whitespace are ignored.
+* That the key and cipher are always complementary with 1-1 mapping.
 
 ## Design
 
@@ -89,7 +90,7 @@ typedef struct _node {
 
 A array of size 27 is created which gives enough space for stores all the characters. Total was stored as its own variable, allowing it to be instantly referenced and so no global variable needed to be created. 
 
-Special indicators where created to allow the indicators `WHITESPACE` was used to indicate the index of a white space character and `ALPHABETICAL`  was used to get the offset of a ASCII character. To get a to value of 1 the code `characterCounter.character[‘a’ - ALPHABETICAL]` would be used.
+Special indicators where created to allow the indicators `WHITESPACE` was used to indicate the index of a white space character and `ALPHABETICAL`  was used to get the offset of a ASCII character. To get a to value of 1 the code `characterCounter.character[‘a’ - ALPHABETICAL]` would be used. It was suggest that direct `ASCII` values be used as Key but the value of z is 122 (largest of valid characters). So an array of length 123 would need to be created which waste far more space than 27.
 
 ### Map
 
@@ -102,7 +103,11 @@ typedef struct _map {
 } map;
 ```
 
-could have been used to map cipher and key to the character but it was decided against as this was just futile copying of data that already exists. So the node instead the combination of the (key and cipher) nodes would be used to represent the map.
+could have been used to map cipher and key to the character but it was decided against as this was just futile copying of data that already exists. So the node instead the combination of the (key and cipher) nodes would be used to represent the map. As you would still have all the information pre
+
+### Totals
+
+It is not possible to get a negative total so `unsigned int` is used. This allows the maximum size which can be counted to larger. Still using the same amount of space as an int.
 
 ## Testing
 
@@ -122,6 +127,10 @@ stacscheck /cs/studres/CS2002/Practicals/W07-C2/Tests
 stacscheck Tests
 ```
 
+### Unit Tests
+
+Unit testing was performed on the methods to ensure under given circumstances they were giving the correct output.
+
 ### Additional Tests
 
 #### Two many arugments
@@ -136,11 +145,15 @@ The `stacscheck` failed to determine what would occur if the file contained no v
 
 The`stacscheck` failed to determine what would occur if the file contained no characters. It is expected that the total count is zero. it is expected total count be printed.
 
+#### Pride and Prejudice
+
+The `stacscheck` used very small samples. Here all the words in the book Pride and Prejudice by Jane Austin are counted.
+
 ### Testing Output
 
 #### For Array Implementation
 
-![](images/stacscheck_for_array.png)
+![](images/stacscheck_for_Array.png)
 
 #### For Linked List Implementation
 
@@ -152,7 +165,26 @@ A problem that was encountered was that when I wanted to get the total of the ch
 
 When deciphering the file, the cipher is file is read in 2 times. This was done so code for part 1 could be reused for key and cipher. As counting was done for both key and cipher, then linked lists created for both. Once the counting of character had been totalled for both then the the 1st file can be open and the replacement of characters can be done in a streamed manner. 
 
-Given more time maybe a constructor could have been developed which creates nodes. Instead of directly using malloc.
+Given more time maybe a constructor could have been developed which creates nodes. Instead of directly using `malloc`. In general collections could have been further abstracted. Only having methods which directly manipulated collection objects.
+
+It was found that the array implementation was much easier to code. No recursion was required. Get elements was faster and didn’t require traversing the collection. In general using the linked list list would not save space as seen for Jane Austin a large sample. That most counts for sufficient sizes will have every of the 27 characters in large amounts. So it can be said that the array one is more effective implementation.
 
 ## Conclusion
 
+In this practical a collection store character counts was created. The program was able to count the number of characters present in a file passed in. The program was able to decipher a file given a key. The data structure used allowed for efficient storage and manipulation of the character counts.
+
+Specification prove difficult to read. So it was hard to understand the requirements that the program needed to meet. So time was initial waste trying to understand what was asked.
+
+Given more time more error checking could have been developed for the decipher part of the program.
+
+## References
+
+[1] <https://www.hackerearth.com/practice/data-structures/linked-list/singly-linked-list/tutorial/> Linked List Implementation
+
+[2] <http://www.cplusplus.com/reference/cstdlib/malloc/> Malloc usuage.
+
+[3] <https://www.tutorialspoint.com/c_standard_library/c_function_free.htm> free usuage c
+
+[4] <https://stackoverflow.com/questions/6417158/c-how-to-free-nodes-in-the-linked-list> freeing nodes of a linked list
+
+[5] <http://www.asciitable.com/> ascii character reference

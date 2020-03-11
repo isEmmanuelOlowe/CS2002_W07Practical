@@ -66,6 +66,7 @@ node* new_occurence(const char *filename) {
   }
   else {
     printf("Trying to open file: No such file or directory");
+    exit(0);
   }
   return base;
 }
@@ -80,14 +81,18 @@ void countCharacters(char * filename) {
     printCount(base);
     cleanSpace(base);
   }
+  else {
+    //No characters were counted
+    printf("Total chars counted: 0");
+  }
 }
 
 void decipher(char *cipherFilename, char *keyFilename) {
   //decipher(arg[1], argv[2]);
   node *cipher = new_occurence(cipherFilename);
-  node *key = new_occurence(keyFilename);
   //prints the cipher if the linked list of both are non-null
   if(cipher){
+    node *key = new_occurence(keyFilename);
     if (key) {
       //decipher
       decrypt(cipher, key, cipherFilename);

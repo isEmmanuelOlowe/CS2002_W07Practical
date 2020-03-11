@@ -8,8 +8,8 @@
 * Node stores Total and Character
 */
 typedef struct _node {
-  int character[MAX_LENGTH];
-  int total;
+  unsigned int character[MAX_LENGTH];
+  unsigned int total;
 } node;
 
 /*
@@ -66,7 +66,7 @@ void printCount(node* base) {
 char decode(node *cipher, node *key, char c) {
   char ch;
   //gets the characters count form the cipher
-  int count = cipher->character[indexCorrector(c)];
+  unsigned int count = cipher->character[indexCorrector(c)];
   for (int i = 0; i < MAX_LENGTH; i++) {
     if (count == key->character[i]){
       if (i == 0) {

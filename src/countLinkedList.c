@@ -5,12 +5,12 @@
 */
 typedef struct _node {
   char character;
-  int count;
+  unsigned int count;
   struct _node* next;
 } node;
 
 //Stores the total number of characters which have been found.
-int total;
+unsigned int total;
 /*
 * Adds a character to the create node in the Linked List.
 */
@@ -88,11 +88,11 @@ node* incrementCount(node* base, char c) {
 */
 void printCount(node* base) {
   if (base) {
-    printf("Total chars counted: %d\n", total);
+    printf("Total chars counted: %u\n", total);
     node *current = base;
     printf("Char, Count\n");
     while(current != NULL) {
-      printf("%c, %d\n", current->character, current->count);
+      printf("%c, %u\n", current->character, current->count);
       current = current->next;
     }
   }
