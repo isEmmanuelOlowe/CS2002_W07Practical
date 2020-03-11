@@ -74,9 +74,10 @@ node* new_occurence(const char *filename) {
 void countCharacters(char * filename) {
   node *base = new_occurence(filename);
   if (base) {
-    
+    //prints the counter
     printCount(base);
   }
+  free(base);
 }
 
 void decipher(char *cipherFilename, char *keyFilename) {
@@ -88,6 +89,8 @@ void decipher(char *cipherFilename, char *keyFilename) {
     //decipher
     decrypt(cipher, key, cipherFilename);
   }
+  free(cipher);
+  free(key);
 }
 
 void error_message() {

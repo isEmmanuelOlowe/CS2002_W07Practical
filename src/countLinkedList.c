@@ -36,7 +36,6 @@ void addToStructure(node *current, char c) {
       node *new = (node *) malloc(sizeof(node));
       new->character = c;
       new->count = 1;
-      new->next = (node *) malloc(sizeof(node));
       new->next = current->next;
       current->next = new;
     }

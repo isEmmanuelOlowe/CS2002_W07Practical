@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define ALPHABETICAL 96
+#define ALPHABETICAL ('a' - 1)
 #define WHITESPACE 0
-#define MAX_LENGTH 27
+#define MAX_LENGTH ('z' - '_' + 1)
 
 /*
 * Node stores Total and Character
